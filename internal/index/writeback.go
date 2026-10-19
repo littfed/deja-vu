@@ -49,10 +49,11 @@ func AdoptWriteBack(dir, kept, path string) (ok bool, err error) {
 		delete(m.IngestFiles, kept)
 	}
 	for key, meta := range m.Sessions {
+		renameCopy(&meta, kept, path)
 		if meta.Path == kept {
 			meta.Path = path
-			m.Sessions[key] = meta
 		}
+		m.Sessions[key] = meta
 	}
 	return true, writeManifestMeta(dir, m)
 }

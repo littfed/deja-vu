@@ -99,6 +99,11 @@ file that can't be appended no longer sends the rest of the pass through a full
 re-parse: a 400 MB transcript that grew 281 KB next to a touched 100 MB one
 took 25 s to index, now about 2 s.
 
+When two transcripts hold the same session id, a pass that rewrites one reads
+the other again too, so a turn both hold is no longer indexed twice and a copy's
+turns are no longer dropped until `deja index --rebuild`. The index format
+moves to version 90, so the first run rebuilds it.
+
 OpenClaw: a heartbeat answered with `HEARTBEAT_OK` is not a session either; a
 sub-agent whose spawning window was archived as `.zst` keeps its parent, and
 finding the spawning window reads each transcript once instead of once per
